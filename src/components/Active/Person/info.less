@@ -1,0 +1,47 @@
+@import (reference) '~less/variables.less';
+
+.info {
+	font-size: 0.875em;
+
+	.table {
+		padding-bottom: 0.25em;
+
+		.row {
+			display: flex;
+			flex-direction: row;
+			align-items: stretch;
+			padding: 0.125em 0;
+
+			.label {
+				color: @primary;
+				width: 5.75em;
+				min-width: 5.75em;
+				padding-right: 0.5em;
+				font-size: 0.8em;
+				font-weight: 300;
+				line-height: 1.75em;
+				letter-spacing: 0.125em;
+				text-align: center;
+				text-transform: uppercase;
+				text-overflow: ellipsis;
+				overflow: hidden;
+			}
+
+			.value {
+				flex: 1;
+				font-family: 'Lato', sans-serif;
+				font-weight: 300;
+				line-height: 1.375em;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+
+	.toggle {
+		color: @primary;
+		font-size: 0.875em;
+		text-decoration: none;
+		cursor: pointer;
+	}
+}

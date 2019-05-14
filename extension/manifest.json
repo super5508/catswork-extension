@@ -1,0 +1,37 @@
+{
+	"name": "CatsWork",
+	"version": "1.0",
+	"description": "CatsWork extension",
+	"background": {
+		"scripts": [
+			"build/background.js"
+		],
+		"persistent": false
+	},
+	"browser_action": {
+		"default_popup": "popup.html",
+		"default_title": "CatsWork"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://*.linkedin.com/*"
+			],
+			"js": [
+				"build/linkedIn.js"
+			],
+			"css": [
+				"build/linkedIn.css"
+			]
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"storage",
+		"http://localhost:7777/"
+	],
+	"web_accessible_resources": [
+		"images/*.png"
+	],
+	"manifest_version": 2
+}

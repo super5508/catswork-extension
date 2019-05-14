@@ -1,0 +1,48 @@
+@import (reference) '~less/variables.less';
+
+.context {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 43px;
+	background-color: @white;
+	border-bottom: 2px solid @lighter;
+
+	.back {
+		color: @dark;
+		width: 1em;
+		padding: 0.625em;
+		margin: 0.375em;
+		border-radius: 50%;
+		font-size: 0.75em;
+		line-height: 1em;
+		text-align: center;
+		cursor: pointer;
+
+		&:hover {
+			background-color: @lighter;
+		}
+	}
+
+	.title {
+		flex: 1;
+		color: @white;
+		padding: 0.625em 0;
+		font-size: 1.125em;
+		line-height: 1em;
+
+		&.root {
+			padding-left: 0.5em;
+		}
+
+		.span {
+			padding: 0.125em 0.5em;
+			background-color: @primary;
+			border-radius: @border-radius-small;
+		}
+	}
+
+	.actionItem {
+		margin-right: 0.75em;
+	}
+}

@@ -1,0 +1,66 @@
+@import (reference) './variables.less';
+
+:global(#catswork_inject_button) {
+	color: rgba(0,0,0,.6);
+	height: 40px;
+	padding: 11px 12px;
+	margin-top: 8px;
+	margin-right: 4px;
+	font-size: 1em;
+	font-weight: 600;
+	border-radius: 2px;
+	box-shadow: inset 0 0 0 1px rgba(0,0,0,.6);
+	white-space: nowrap;
+	transition: 0.167s ease;
+
+	&:hover {
+		color: rgba(0,0,0,.75);
+		background-color: fade(@primary, 50%);
+		box-shadow: inset 0 0 0 1px rgba(0,0,0,.6), inset 0 0 0 2px rgba(0,0,0,.75), inset 0 0 0 1px transparent;
+	}
+
+	&:global(.catswork_mt4) {
+		margin-top: 0;
+		margin-left: 4px;
+	}
+
+	img {
+		height: 0.75em;
+		margin-left: 0.25em;
+	}
+}
+
+:global(#catswork_inject_overlay) {
+	display: none;
+	position: fixed;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: fade(@black, 75%);
+	z-index: 9999;
+
+	&:global(.catswork_inject_overlay_active) {
+		display: block;
+	}
+
+	div {
+		position: absolute;
+		top: 0.75em;
+		right: 1em;
+		color: @dark;
+		max-width: 50vw;
+		padding: 0.375em 0.875em;
+		background-color: @white;
+		border-radius: @border-radius;
+		opacity: 0;
+		transform: translateX(5em);
+		transition: transform 0.25s ease-in, opacity 0.25s ease-in;
+
+		&:global(.catswork_inject_overlay_active) {
+			opacity: 1;
+			transform: translateX(0);
+			transition: transform 0.25s ease-out, opacity 0.25s ease-out;
+		}
+	}
+}

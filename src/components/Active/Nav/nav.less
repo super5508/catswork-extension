@@ -1,0 +1,71 @@
+@import (reference) '~less/variables.less';
+
+.nav {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding-right: 0.75em;
+	border-bottom: 3px solid @lighter;
+	background-color: @white;
+	z-index: 100;
+
+	.tabs {
+		flex: 1;
+		line-height: 0;
+
+		.tab {
+			display: inline-block;
+			width: 6.25em;
+			height: 2.25em;
+			margin-bottom: -3px;
+			background-color: @white;
+			background-position: center;
+			background-size: auto 35%;
+			background-repeat: no-repeat;
+			border-bottom: 3px solid @light;
+			opacity: 0.75;
+			cursor: pointer;
+
+			&:hover {
+				opacity: 1;
+			}
+
+			&.tabTrack {
+				background-image: url('../../../assets/logo-track.png');
+			}
+			&.tabChat {
+				background-image: url('../../../assets/logo-chat.png');
+			}
+
+			&.tabActive {
+				border-bottom: 3px solid @primary;
+				opacity: 1;
+			}
+		}
+	}
+
+	.user {
+		display: inline-block;
+		width: 1.667em;
+		height: 1.667em;
+		margin-bottom: 2px;
+		background-color: @dark;
+		background-image: url('../../../assets/user.svg');
+		background-position: center;
+		background-size: 50%;
+		background-repeat: no-repeat;
+		border: 3px solid @secondary;
+		border-radius: 50%;
+		box-sizing: border-box;
+		cursor: pointer;
+		opacity: 0.875;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+}

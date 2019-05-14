@@ -1,0 +1,29 @@
+@import (reference) '~less/variables.less';
+
+body {
+	color: @black;
+	min-height: 600px;
+	margin: 0;
+	font-family: 'Karla', sans-serif;
+	font-size: 18px;
+	overflow: auto;
+}
+
+:global(#root) {
+	position: inherit;
+	display: flex;
+	flex-direction: column;
+	height: 600px;
+	overflow: inherit;
+}
+
+p {
+	font-family: 'Lato', sans-serif;
+	font-size: 1em;
+	font-weight: 300;
+	line-height: 1.375em;
+}
+
+input, select, textarea, button {
+	font: inherit;
+}

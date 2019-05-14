@@ -1,0 +1,55 @@
+@import (reference) '~less/variables.less';
+
+.notifications {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	margin-top: 0.375em;
+
+	.container {
+		flex: 1;
+		margin-left: -0.5em;
+		margin-right: -0.5em;
+		border-top: 2px solid @lighter;
+		font-family: 'Lato', sans-serif;
+		font-weight: 300;
+		overflow: auto;
+
+		.empty {
+			color: @medium;
+			padding: 0.75em;
+			text-align: center;
+		}
+
+		.notification {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			padding: 0.375em;
+			cursor: pointer;
+			transition: background-color 0.125s ease;
+
+			&:hover {
+				background-color: @lightest;
+			}
+
+			.icon {
+				color: @primary;
+			}
+
+			.message {
+				flex: 1;
+				padding: 0 0.5em;
+				margin-left: 0.5em;
+				font-size: 0.75em;
+				line-height: 1.375em;
+			}
+
+			.date {
+				align-self: flex-start;
+				color: @medium;
+				font-size: 0.625em;
+			}
+		}
+	}
+}

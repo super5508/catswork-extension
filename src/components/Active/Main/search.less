@@ -1,0 +1,71 @@
+@import (reference) '~less/variables.less';
+
+.search {
+	position: relative;
+
+	.results {
+		position: absolute;
+		top: ~'calc(40px + 0.5em)';
+		left: 0;
+		right: 0;
+		max-height: 320px;
+		background-color: @white;
+		border: 1px solid @lighter;
+		border-radius: @border-radius;
+		box-shadow: 0 2px 4px fade(@black, 25%);
+		overflow-x: hidden;
+		overflow-y: auto;
+		z-index: 99;
+
+		.empty {
+			padding: 0.375em 1em;
+			line-height: 1.5em;
+
+			.link {
+				color: @primary;
+				text-decoration: none;
+			}
+		}
+
+		.result {
+			padding: 0.375em 1em;
+			border-bottom: 1px solid @lighter;
+			cursor: pointer;
+
+			&:last-child {
+				border-bottom: none;
+			}
+
+			&:hover {
+				background-color: @lightest;
+			}
+
+			.name, .position, .company {
+				margin: 0.125em 0;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+
+				.highlight {
+					color: @secondary;
+				}
+			}
+
+			.name {
+				font-size: 1em;
+			}
+
+			.position {
+				color: @medium;
+				font-family: 'Lato', sans-serif;
+				font-size: 0.8125em;
+			}
+
+			.company {
+				color: @primary;
+				font-size: 0.8125em;
+				font-weight: 700;
+			}
+		}
+	}
+}
