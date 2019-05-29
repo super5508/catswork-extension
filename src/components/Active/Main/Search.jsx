@@ -94,7 +94,7 @@ class Search extends React.Component {
 					return (
 						<div className={s.result} onClick={this._onSelect.bind(null, person.id)}>
 							<h4 className={s.name}>{nameElement}</h4>
-							<div className={s.position}>{person.position}</div>
+							<div className={s.position}>{person.position || 'No position'}</div>
 							<div className={s.company}>{companyElement}</div>
 						</div>
 					)

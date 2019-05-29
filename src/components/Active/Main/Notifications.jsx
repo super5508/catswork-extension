@@ -34,7 +34,9 @@ const Notifications = ({ notifications, onShowPerson }) => {
 
 	return (
 		<div className={s.notifications}>
-			<Heading size={4}>Feed</Heading>
+			<div className={s.heading}>
+				<Heading size={4}>Feed</Heading>
+			</div>
 			<div className={s.container}>{notificationElements}</div>
 		</div>
 	)

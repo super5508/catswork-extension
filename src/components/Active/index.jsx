@@ -7,6 +7,7 @@ import state from 'state/state'
 import Nav from './Nav'
 import Context from './Context'
 import Main from './Main'
+import People from './People'
 import AddPerson from './AddPerson'
 import Person from './Person'
 import AddActivity from './Person/AddActivity'
@@ -31,6 +32,9 @@ class Active extends React.Component {
 							<Route path='/'
 								exact
 								component={Main} />
+							<Route path='/people'
+								exact
+								component={People} />
 							<Route path='/add-person'
 								exact
 								component={AddPerson} />

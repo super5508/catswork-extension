@@ -2,6 +2,10 @@ import React from 'react'
 
 import state from 'state/state'
 
+import Heading from 'ui/Heading'
+
+import s from './notFound.less'
+
 class NotFound extends React.Component {
 
 	componentWillMount() {
@@ -9,7 +13,11 @@ class NotFound extends React.Component {
 	}
 
 	render() {
-		return <div>Not found</div>
+		return (
+			<section className={s.notFound}>
+				<Heading size={2}>Not found</Heading>
+			</section>
+		)
 	}
 
 }
