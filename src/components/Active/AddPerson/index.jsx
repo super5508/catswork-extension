@@ -12,9 +12,9 @@ import InfoForm from './InfoForm'
 import SourceForm from './SourceForm'
 
 const ADD_PERSON_QUERY = gql`
-	mutation AddPersonMutation($input: PersonInput!) {
-		addPerson(input: $input) {
-			id
+	mutation AddNewLinkedinUserInfo($parameter: userDashboardInputType) {
+		AddNewLinkedinUserInfo(parameter: $parameter) {
+			userId
 		}
 	}
 `
@@ -76,7 +76,7 @@ class AddPerson extends React.Component {
 	_onSourceFormSubmit = (values) => {
 		this._person = Object.assign({}, this._person, values)
 
-		return GraphQL.query(ADD_PERSON_QUERY, { input: this._person })
+		return GraphQL.query(ADD_PERSON_QUERY, { parameter: this._person })
 			.then(({ data }) => {
 				this.props.history.push(`/person/${data.addPerson.id}`)
 			})

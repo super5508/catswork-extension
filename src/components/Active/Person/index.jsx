@@ -16,10 +16,9 @@ import Activity from './Activity'
 import s from './person.less'
 
 const PERSON_QUERY = gql`
-	query PersonQuery($id: Int!) {
-		person(id: $id) {
+	query catWorksDashboard  {
 			id
-			linkedInId
+			userId
 			first
 			last
 			company
@@ -35,38 +34,31 @@ const PERSON_QUERY = gql`
 			notes
 			source
 			sourceCustom
-
-			activity {
+			userActivity {
 				id
+				userId
 				activity
 				activityCustom
-				date
+				updatedAt
 				status
 			}
-		}
 	}
 `
 const TOGGLE_ACTIVITY_QUERY = gql`
-	mutation ToggleActivityMutation($personId: Int!, $activityId: Int!) {
-		person(id: $personId) {
-			anActivity(id: $activityId) {
-				toggle {
-					status
-				}
-			}
+	mutation updateActivity($id: Int!) {
+		updateActivity(id: $id) {
+			userId
 		}
 	}
 `
+
+// DeleteActivity
 const DELETE_ACTIVITY_QUERY = gql`
-	mutation DeleteActivityQuery($personId: Int!, $activityId: Int!) {
-		person(id: $personId) {
-			anActivity(id: $activityId) {
-				delete {
-					ok
-				}
-			}
-		}
+mutation DeleteActivity($id: Int!) {
+	DeleteActivity(id: $id) {
+		userId
 	}
+}
 `
 
 @observer
@@ -106,8 +98,7 @@ class Person extends React.Component {
 
 	_onToggleActivity = (id) => {
 		return GraphQL.query(TOGGLE_ACTIVITY_QUERY, {
-			personId: parseInt(this.props.match.params.id),
-			activityId: id
+			id: id
 		})
 			.then(action(({ data }) => {
 				const activity = this._$person.activity.map((activity) => {
@@ -128,8 +119,7 @@ class Person extends React.Component {
 
 	_onDeleteActivity = (id) => {
 		return GraphQL.query(DELETE_ACTIVITY_QUERY, {
-			personId: parseInt(this.props.match.params.id),
-			activityId: id
+			Id: id
 		})
 			.then(action(() => {
 				const activity = this._$person.activity.filter((activity) => {
