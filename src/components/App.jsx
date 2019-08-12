@@ -17,16 +17,17 @@ class App extends React.Component {
 	}
 
 	render() {
+		
 		if (state.$user === undefined) {
 			return <Loading />
 		}
 		else if (state.$user === null) {
 			return <SignedOut />
 		}
-		else if (state.$user.activeStep < ActiveStep.ACTIVE) {
+		else if (state.$user < ActiveStep.ACTIVE) {
 			return <Inactive />
 		}
-		else if (state.$user.activeStep === ActiveStep.ACTIVE) {
+		else if (state.$user === ActiveStep.ACTIVE) {
 			return <Active />
 		}
 		else {

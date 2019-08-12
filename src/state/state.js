@@ -19,8 +19,12 @@ class State {
 
 	load() {
 		Status.status().then(action((status) => {
-			this.$user = status.user
-		}))
+			console.log(status)
+			this.$user = status.data.payload.activeStep
+		})).catch((error)=> {
+			console.error(`This is error:`, error)
+			this.$user = null
+		})
 	}
 
 	@action
