@@ -12,7 +12,7 @@ import InfoForm from './InfoForm'
 import SourceForm from './SourceForm'
 
 const ADD_PERSON_QUERY = gql`
-	mutation AddNewLinkedinUserInfo($parameter: userDashboardInputType) {
+	mutation AddNewLinkedinUserInfo($parameter: userDashboadInputType) {
 		AddNewLinkedinUserInfo(parameter: $parameter) {
 			userId
 		}

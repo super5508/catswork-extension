@@ -39,7 +39,7 @@ const PERSON_QUERY = gql`
 				userId
 				activity
 				activityCustom
-				updatedAt
+				date
 				status
 			}
 	}
