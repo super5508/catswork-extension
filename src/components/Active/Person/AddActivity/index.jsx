@@ -20,11 +20,9 @@ import Footer from '../../Footer'
 import s from './addActivity.less'
 
 const ADD_ACTIVITY_QUERY = gql`
-	mutation AddActivityMutation($id: Int!, $input: ActivityInput!) {
-		person(id: $id) {
-			addActivity(input: $input) {
+	mutation AddNewActivity($id: Int!, $parameter: user_activity_input!) {
+		AddNewActivity(id: $id, parameter: $parameter) {
 				id
-			}
 		}
 	}
 `
@@ -125,7 +123,7 @@ class AddActivity extends React.Component {
 	_onSubmit = (values) => {
 		GraphQL.query(ADD_ACTIVITY_QUERY, {
 			id: parseInt(this.props.match.params.id),
-			input: {
+			parameter: {
 				activity: values.activity,
 				activityCustom: values.activityCustom,
 				date: values.date.toISOString()

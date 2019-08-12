@@ -14,7 +14,7 @@ import SourceForm from './SourceForm'
 const ADD_PERSON_QUERY = gql`
 	mutation AddNewLinkedinUserInfo($parameter: userDashboadInputType) {
 		AddNewLinkedinUserInfo(parameter: $parameter) {
-			userId
+			id
 		}
 	}
 `
@@ -27,6 +27,7 @@ class AddPerson extends React.Component {
 	_person
 
 	componentWillMount() {
+		console.log(`Add Person`)
 		state.setContext('Add person')
 		this._$page = 0
 		chrome.storage.local.get(['person'], action(({ person }) => {
@@ -76,8 +77,9 @@ class AddPerson extends React.Component {
 		this._person = Object.assign({}, this._person, values)
 
 		return GraphQL.query(ADD_PERSON_QUERY, { parameter: this._person })
-			.then(({ data }) => {
-				this.props.history.push(`/person/${data.addPerson.id}`)
+			.then((response) => {
+				console.log(`This is response from Graph Add Person Query`, response)
+				this.props.history.push(`/person/${response.data.AddNewLinkedinUserInfo.id}`)
 			})
 	}
 

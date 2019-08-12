@@ -81,6 +81,9 @@ class SourceForm extends React.Component {
 			.then(() => {
 				setSubmitting(false)
 			})
+			.catch((error)=> {
+				console.error(`ERROR ENCOUNTERED:`, error)
+			}) 
 	}
 
 }

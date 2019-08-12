@@ -16,7 +16,8 @@ import Activity from './Activity'
 import s from './person.less'
 
 const PERSON_QUERY = gql`
-	query catWorksDashboard  {
+query userRootQueryType($id: Int!){
+	catWorksSingleDashboardUser(id: $id)  {
 			personId
 			userId
 			first
@@ -42,6 +43,7 @@ const PERSON_QUERY = gql`
 				date
 				status
 			}
+		}
 	}
 `
 const TOGGLE_ACTIVITY_QUERY = gql`
@@ -70,8 +72,9 @@ class Person extends React.Component {
 		state.setContext('View person', <Button size='small' onClick={this._onEdit}>Edit</Button>)
 
 		GraphQL.query(PERSON_QUERY, { id: parseInt(this.props.match.params.id) })
-			.then(action(({ data }) => {
-				this._$person = data.person
+			.then(action((response) => {
+				console.log(`Response from person Query:`, response)
+				this._$person = response.data.catWorksSingleDashboardUser
 			}))
 	}
 
@@ -84,7 +87,7 @@ class Person extends React.Component {
 			<section className={s.person}>
 				<Header person={this._$person} />
 				<Info person={this._$person} />
-				<Activity activity={this._$person.activity}
+				<Activity activity={this._$person.userActivity}
 					onToggle={this._onToggleActivity}
 					onDelete={this._onDeleteActivity}
 					onAddActivity={this._onAddActivity} />

@@ -22,6 +22,7 @@ class Activity extends React.Component {
 
 	render() {
 		let rowElements
+		console.log(this.props)
 		if (this.props.activity.length) {
 			rowElements = this.props.activity
 				.sort((a, b) => new Date(b.date) - new Date(a.date))
