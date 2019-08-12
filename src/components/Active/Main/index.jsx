@@ -16,9 +16,9 @@ import Notifications from './Notifications'
 import s from './main.less'
 
 const PEOPLE_QUERY = gql`
-	query PeopleQuery {
-		people {
-			id
+	query userRootQueryType {
+		catWorksDashboard {
+			personId
 			first
 			last
 			company
@@ -27,14 +27,14 @@ const PEOPLE_QUERY = gql`
 	}
 `
 const NOTIFICATIONS_QUERY = gql`
-	query NotificationsQuery {
-		notifications {
-			id
-			person
-			activity
-			type
-			message
-			date
+	query userRootQueryType {
+	catWorksNotification {
+		notificationId
+		personId
+		activity
+		type
+		message
+		createdAt
 		}
 	}
 `
@@ -56,12 +56,14 @@ class Main extends React.Component {
 		}))
 
 		GraphQL.query(PEOPLE_QUERY)
-			.then(action(({ data }) => {
-				this._$people = data.people
+			.then(action((response) => {
+				console.log(`Response from people Query:`, response)
+				this._$people = response.data.catWorksDashboard
 			}))
 		GraphQL.query(NOTIFICATIONS_QUERY)
-			.then(action(({ data }) => {
-				this._$notifications = data.notifications
+			.then(action((response) => {
+				console.log(`Response from Notificstion Query:`, response)
+				this._$notifications = response.data.catWorksNotification
 			}))
 
 		state.setContext('Dashboard')

@@ -18,7 +18,6 @@ const ADD_PERSON_QUERY = gql`
 		}
 	}
 `
-console.log(`This is chrome storage`, chrome)
 
 @observer
 class AddPerson extends React.Component {
@@ -27,9 +26,8 @@ class AddPerson extends React.Component {
 
 	_person
 
-	componentDidMount() {
+	componentWillMount() {
 		state.setContext('Add person')
-		console.log(`This is chrome storage`, chrome)
 		this._$page = 0
 		chrome.storage.local.get(['person'], action(({ person }) => {
 			if (person) {

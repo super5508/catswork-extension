@@ -17,7 +17,7 @@ import s from './person.less'
 
 const PERSON_QUERY = gql`
 	query catWorksDashboard  {
-			id
+			personId
 			userId
 			first
 			last
@@ -35,7 +35,7 @@ const PERSON_QUERY = gql`
 			source
 			sourceCustom
 			userActivity {
-				id
+				activityId
 				userId
 				activity
 				activityCustom
@@ -45,8 +45,8 @@ const PERSON_QUERY = gql`
 	}
 `
 const TOGGLE_ACTIVITY_QUERY = gql`
-	mutation updateActivity($id: Int!) {
-		updateActivity(id: $id) {
+	mutation updateActivity($activityId: Int!) {
+		updateActivity(activityId: $id) {
 			userId
 		}
 	}
@@ -54,8 +54,8 @@ const TOGGLE_ACTIVITY_QUERY = gql`
 
 // DeleteActivity
 const DELETE_ACTIVITY_QUERY = gql`
-mutation DeleteActivity($id: Int!) {
-	DeleteActivity(id: $id) {
+mutation DeleteActivity($activityId: Int!) {
+	DeleteActivity(activityId: $id) {
 		userId
 	}
 }

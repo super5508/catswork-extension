@@ -28,11 +28,12 @@
 		"yup": "^0.27.0"
 	},
 	"devDependencies": {
+		"onchange": "^6.0.0",
 		"webpack-dev-server": "^3.7.2"
 	},
 	"scripts": {
-		"dev": "node_modules/.bin/webpack-dev-server --mode development --open --hot",
+		"watch-build": "onchange '{src,examples}/**/*.jsx' -- npm run build",
 		"build": "./node_modules/.bin/webpack --config webpack.config.js --display-error-details --progress --color",
-		"watch": "./node_modules/.bin/webpack --config webpack.config.js --display-error-details --progress --color -w"
+		"watch": "./node_modules/.bin/webpack --config webpack.config.js --display-error-details --progress --color -w --mode development"
 	}
 }
