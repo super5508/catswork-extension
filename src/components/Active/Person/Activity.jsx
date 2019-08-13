@@ -24,17 +24,21 @@ class Activity extends React.Component {
 		let rowElements
 		console.log(this.props)
 		if (this.props.activity.length) {
+			console.log(`This is activity:`, this.props.activity)
 			rowElements = this.props.activity
 				.sort((a, b) => new Date(b.date) - new Date(a.date))
-				.map(({ id, activity, activityCustom, date, status }) => (
-					<React.Fragment key={id}>
-						<div className={[s.row, id === this._$selected ? s.active : ''].join(' ')} onClick={this._onSelect.bind(null, id)}>
+				.map(({ activityId, activity, activityCustom, date, status }) => {
+					const newStatus = status === 0? false : true
+					console.log(newStatus)
+				return (
+					<React.Fragment key={activityId}>
+						<div className={[s.row, activityId === this._$selected ? s.active : ''].join(' ')} onClick={this._onSelect.bind(null, activityId)}>
 							<div className={s.activityColumn}>{activity === 'OTHER' ? activityCustom || '-' : EnumActivity[activity]}</div>
 							<div className={s.dateColumn}><span className={s.small}>{dateUtil.formatDate(new Date(date))}</span></div>
 							<div className={s.timeColumn}><span className={s.small}>{dateUtil.formatTime(new Date(date))}</span></div>
-							<div className={s.statusColumn}><i className={status ? 'fas fa-check-square' : 'far fa-square'} /></div>
+							<div className={s.statusColumn}><i className={newStatus ? 'fas fa-check-square' : 'far fa-square'} /></div>
 						</div>
-						{id === this._$selected ? (
+						{activityId === this._$selected ? (
 							this._$loading ? (
 								<div className={s.loadingContainer}>
 									<Loading small />
@@ -43,13 +47,13 @@ class Activity extends React.Component {
 									<div className={s.actions}>
 										<Button className={s.actionButton}
 											size='small'
-											onClick={this._onToggle}>{status ? 'Mark incomplete' : 'Mark complete'}</Button>
+											onClick={this._onToggle}>{newStatus? 'Mark incomplete' : 'Mark complete'}</Button> 
 										<Button size='small' onClick={this._onDelete}>Delete</Button>
 									</div>
 								)
 						) : null}
 					</React.Fragment>
-				))
+				)})
 		}
 		else {
 			rowElements = <div className={s.empty}>No activity. <a className={s.link} onClick={this.props.onAddActivity}>Plan something</a></div>

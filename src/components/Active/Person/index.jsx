@@ -47,17 +47,17 @@ query userRootQueryType($id: Int!){
 	}
 `
 const TOGGLE_ACTIVITY_QUERY = gql`
-	mutation updateActivity($activityId: Int!) {
-		updateActivity(activityId: $id) {
-			userId
+	mutation ToggleActivity($id: Int!) {
+		ToggleActivity(id: $id) {
+			status
 		}
 	}
 `
 
 // DeleteActivity
 const DELETE_ACTIVITY_QUERY = gql`
-mutation DeleteActivity($activityId: Int!) {
-	DeleteActivity(activityId: $id) {
+mutation DeleteActivity($id: Int!) {
+	DeleteActivity(id: $id) {
 		userId
 	}
 }
@@ -103,12 +103,15 @@ class Person extends React.Component {
 		return GraphQL.query(TOGGLE_ACTIVITY_QUERY, {
 			id: id
 		})
-			.then(action(({ data }) => {
-				const activity = this._$person.activity.map((activity) => {
-					if (activity.id === id) {
+			.then(action((response) => {
+				console.log(`person:`, this._$person)
+				console.log(`Activity:`, this._$person)
+				const activity = this._$person.userActivity.map((activity) => {
+					console.log(response)
+					if (activity.activityId === id) {
 						return {
 							...activity,
-							status: data.person.anActivity.toggle.status
+							status: response.data.ToggleActivity.status
 						}
 					}
 					else {
@@ -122,11 +125,11 @@ class Person extends React.Component {
 
 	_onDeleteActivity = (id) => {
 		return GraphQL.query(DELETE_ACTIVITY_QUERY, {
-			Id: id
+			id: id
 		})
 			.then(action(() => {
-				const activity = this._$person.activity.filter((activity) => {
-					return activity.id !== id
+				const activity = this._$person.userActivity.filter((activity) => {
+					return activity.activityId !== id
 				})
 
 				this._$person = { ...this._$person, activity }
