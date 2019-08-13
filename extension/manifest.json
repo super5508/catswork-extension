@@ -2,6 +2,9 @@
 	"name": "CatsWork",
 	"version": "1.0",
 	"description": "CatsWork extension",
+	"icons": {
+		"128": "images/icon128.png"
+	},
 	"background": {
 		"scripts": [
 			"build/background.js"
@@ -10,7 +13,8 @@
 	},
 	"browser_action": {
 		"default_popup": "popup.html",
-		"default_title": "CatsWork"
+		"default_title": "CatsWork",
+		"default_Icon": "images/icon128.png"
 	},
 	"content_scripts": [
 		{
