@@ -18,13 +18,15 @@ const Notifications = ({ notifications, onShowPerson }) => {
 	if (notifications.length) {
 		notificationElements = notifications
 			.sort((a, b) => new Date(b.date) - new Date(a.date))
-			.map(({ id, person, type, message, date: createdAt }) => (
-				<div key={id} className={s.notification} onClick={onShowPerson.bind(null, person)}>
+			.map(({ notificationId, personId, type, message, createdAt }) =>{ 
+			return(
+				<div key={notificationId} className={s.notification} onClick={onShowPerson.bind(null, personId)}>
 					<div className={s.icon}><i className={ICONS[type]} /></div>
 					<div className={s.message}>{message}</div>
-					<div className={s.date}><TimeAgo date={new Date(createdAt)} /></div>
+					<div className={s.date}><TimeAgo date={parseInt(createdAt)} /></div>
 				</div>
-			))
+			)}
+		)
 	}
 	else {
 		notificationElements = (
