@@ -16,7 +16,7 @@ class Nav extends React.Component {
 					<a className={[s.tab, s.tabTrack, state.$tab === 'track' ? s.tabActive : ''].join(' ')} onClick={this._onTrackSelect} />
 					{/* <a className={[s.tab, s.tabChat, state.$tab === 'chat' ? s.tabActive : ''].join(' ')} onClick={this._onChatSelect} /> */}
 				</div>
-				<a className={s.user} href={`${config.server.url}`} target='_blank' />
+				<a className={s.user} href={`${config.dashboard.url}`} target='_blank' />
 			</nav>
 		)
 	}

@@ -17,7 +17,7 @@ const Inactive = () => (
 			<Heading size={2}>Your account isn't quite set up yet</Heading>
 			<p>Head to the dashboard to finish setting up your account so you can start using the app.</p>
 			<Button size='large'
-				href={config.server.url}
+				href={config.dashboard.url}
 				target='_blank'>Dashboard</Button>
 		</div>
 	</div>
