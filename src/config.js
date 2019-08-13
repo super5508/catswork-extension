@@ -5,7 +5,7 @@ const config = {
 		graphQLPath: 'graphql'
 	},
 	dashboard: {
-		url: 'http://localhost:7777/'
+		url: 'http://localhost:8080/'
 	}
 }
 

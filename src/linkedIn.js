@@ -41,7 +41,7 @@ function onAdd() {
 		notes: null
 	}
 
-	const nameElement = document.querySelector('.pv-top-card-section__name')
+	const nameElement = document.querySelector('.pv-top-card-v3--list')
 	if (nameElement) {
 		const name = removeNewLines(nameElement.textContent)
 			.trim()
@@ -52,11 +52,11 @@ function onAdd() {
 			person.first = name[0]
 		}
 		if (name.length > 1) {
-			person.last = name.slice(1).join(' ')
+			person.last = name[1]
 		}
 	}
 
-	const generalLocationElement = document.querySelector('.pv-top-card-section__location')
+	const generalLocationElement = document.querySelector('.pv-entity__location')
 	if (generalLocationElement) {
 		person.location = removeNewLines(generalLocationElement.textContent).trim()
 	}
@@ -104,7 +104,7 @@ function onAdd() {
 		}
 	}
 
-	const linksSection = document.querySelector('.pv-top-card-v2-section__links')
+	const linksSection = document.querySelector('.msg-overlay-bubble-header__settings-links')
 	if (linksSection) {
 		Array.from(linksSection.querySelectorAll('a'))
 			.filter(element => (element.href || '').indexOf('/detail/contact-info') > -1)
@@ -152,7 +152,7 @@ function load() {
 		clearInterval(interval)
 	}
 
-	let actionsContainer = document.querySelector('.pv-top-card-v2-section__actions')
+	let actionsContainer = document.querySelector('.pv-top-card-v3__distance-badge')
 	const injectButton = document.querySelector('#catswork_inject_button')
 	if (actionsContainer) {
 		clearInterval(interval)

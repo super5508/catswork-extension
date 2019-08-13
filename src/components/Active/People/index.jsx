@@ -1,21 +1,50 @@
 import React from 'React'
-
+import { observable, action } from 'mobx'
+import { observer } from 'mobx-react'
 import config from 'config'
 import state from 'state/state'
-
 import Button from 'ui/Button'
 import Input from 'ui/Input'
-
+import GraphQL, { gql } from 'services/GraphQL'
 import Footer from '../Footer'
-
 import s from './people.less'
+import Loading from 'ui/Loading'
+const PEOPLE_QUERY = gql`
+	query userRootQueryType {
+		catWorksDashboard {
+			personId
+			first
+			last
+			company
+			position
+		}
+	}
+`
 
+
+ 
 class People extends React.Component {
 
+	state = { //TODO: Using State because not sure about the working of mobx here
+		people: null
+	}
+	
+	
 	_searchInput
 
 	componentWillMount() {
 		state.setContext('People')
+		GraphQL.query(PEOPLE_QUERY)
+		.then(action((response) => {
+			console.log(`Response from peoples Query:`, response)
+			this.setState({people:response.data.catWorksDashboard})
+		})).catch(err => {
+			console.error(err)
+		})
+	}
+
+	_onPersonSelect = (id) => {
+		this.props.history.push(`/person/${id}`)
 	}
 
 	componentDidMount() {
@@ -23,8 +52,9 @@ class People extends React.Component {
 	}
 
 	render() {
-		return (
-			<section className={s.people}>
+		if (!this.state.people) {
+			return (
+				<section className={s.people}>
 				<Input block
 					icon='fas fa-search'
 					block
@@ -41,9 +71,34 @@ class People extends React.Component {
 						target='_blank'>View on dashboard</Button>
 				</Footer>
 			</section>
-		)
+			)
+		} if (this.state.people.length) {
+			return (
+			<section className={s.people}>
+			<div  style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+					<h2>Name</h2>
+					<h2>Firm</h2>
+			</div>
+			{this.state.people.map(({ personId,	userId, first, last, company }) => {
+				// Using Inline styling because .scss wasn't working or I don't know how to use
+				return (
+					<div key={personId} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}} onClick={() => this._onPersonSelect(personId)}>
+						<p>{first}{last}</p>
+						<p>{company}</p>
+					</div>
+				)
+			})}
+			<Footer>
+				<Button block
+					center
+					href={config.dashboard.url}
+					target='_blank'>View on dashboard</Button>
+			</Footer>
+		</section>
+			)
+		}
+		
 	}
-
 }
 
 export default People
