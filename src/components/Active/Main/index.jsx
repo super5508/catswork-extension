@@ -76,11 +76,11 @@ class Main extends React.Component {
 
 		return (
 			<section className={s.main}>
-				<Search people={this._$people} onSelect={this._onPersonSelect} />
 				<div className={s.buttons}>
 					<Button className={s.button} onClick={this._onViewPeople}>View people</Button>
 					<Button className={s.button} onClick={this._onAddPerson}>Add person</Button>
 				</div>
+				<Search people={this._$people} onSelect={this._onPersonSelect} />
 				<Todo />
 				<Notifications notifications={this._$notifications} onShowPerson={this._onPersonSelect} />
 			</section>

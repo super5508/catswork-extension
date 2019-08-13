@@ -24,7 +24,8 @@ class Context extends React.Component {
 		return (
 			<div className={s.context}>
 				{backButton}
-				<div className={[s.title, this.props.history.index > 0 ? '' : s.root].join(' ')}><span className={s.span}>{state.$title}</span></div>
+				
+				{/* REMOVING GREEN AREA <div className={[s.title, this.props.history.index > 0 ? '' : s.root].join(' ')}><span className={s.span}>{state.$title}</span></div> */}
 				{actionItem}
 			</div>
 		)
