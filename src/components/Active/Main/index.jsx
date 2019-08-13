@@ -88,6 +88,7 @@ class Main extends React.Component {
 	}
 
 	_onPersonSelect = (id) => {
+		console.log(id)
 		this.props.history.push(`/person/${id}`)
 	}
 

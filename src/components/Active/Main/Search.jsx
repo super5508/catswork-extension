@@ -92,7 +92,7 @@ class Search extends React.Component {
 					) : person.company
 
 					return (
-						<div className={s.result} onClick={this._onSelect.bind(null, person.id)}>
+						<div className={s.result} onClick={this._onSelect.bind(null, person.personId)}>
 							<h4 className={s.name}>{nameElement}</h4>
 							<div className={s.position}>{person.position || 'No position'}</div>
 							<div className={s.company}>{companyElement}</div>
@@ -158,6 +158,7 @@ class Search extends React.Component {
 	}
 
 	_onSelect = (id) => {
+		console.log(`Id from on Select:`, id)
 		this.props.onSelect(id)
 	}
 
