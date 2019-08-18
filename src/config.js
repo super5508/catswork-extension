@@ -1,11 +1,11 @@
 
 const config = {
 	server: {
-		url: 'http://localhost:7777/',
+		url: 'http://dashboard.catswork.io/',
 		graphQLPath: 'graphql'
 	},
 	dashboard: {
-		url: 'http://localhost:8080/'
+		url: 'http://dashboard.catswork.io/'
 	}
 }
 
