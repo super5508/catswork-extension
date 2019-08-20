@@ -168,9 +168,7 @@ function load() {
 		}
 
 		const image = document.createElement('img')
-		image.src = chrome.runtime.getURL('images/logo-track.png')
-
-		button.appendChild(document.createTextNode('Add to '))
+		image.src = chrome.runtime.getURL('images/icon128.png')
 		button.appendChild(image)
 
 		button.addEventListener('click', onAdd)
