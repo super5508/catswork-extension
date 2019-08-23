@@ -152,8 +152,11 @@ function load() {
 		clearInterval(interval)
 	}
 
-	let actionsContainer = document.querySelector('.pv-top-card-v3__distance-badge')
+	// let actionsContainer = document.querySelector('.pv-top-card-v3__distance-badge')
+	let actionsContainer = document.querySelector('#ember51')
+
 	const injectButton = document.querySelector('#catswork_inject_button')
+
 	if (actionsContainer) {
 		clearInterval(interval)
 
@@ -169,11 +172,15 @@ function load() {
 
 		const image = document.createElement('img')
 		image.src = chrome.runtime.getURL('images/icon128.png')
+
+		button.innerHTML = `add to`;
+
 		button.appendChild(image)
 
 		button.addEventListener('click', onAdd)
 
-		actionsContainer.append(button)
+		// actionsContainer.append(button)
+		actionsContainer.prepend(button)
 	}
 }
 
