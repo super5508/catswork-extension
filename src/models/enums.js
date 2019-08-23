@@ -35,7 +35,7 @@ const EnumActivity = {
 	PHONE_CALL: 'Phone call',
 	COFFEE_CHAT: 'Coffee chat',
 	RE_CONNECT: 'Re-connect',
-	ASK_FOR_REFERALL: 'Asked for referral',
+	ASK_FOR_REFERRAL: 'Asked for referral',
 	OTHER: 'Other'
 }
 
