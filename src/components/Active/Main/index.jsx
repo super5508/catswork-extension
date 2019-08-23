@@ -39,12 +39,46 @@ const NOTIFICATIONS_QUERY = gql`
 	}
 `
 
+const ACTIVITIES_QUERY = gql`
+	query userRootQueryType {
+    catWorksActivity {
+      activityId
+      userId
+      activityCustom
+      activity
+      status
+      personId
+      updatedAt
+      createdAt
+      date
+		}
+	}
+`
+
+const UPDATE_ACTIVITY_QUERY = gql`
+	mutation updateActivity($id: Int!, $parameter: user_activity_input!) {
+		updateActivity(id: $id, parameter: $parameter) {
+				id
+		}
+	}
+`
+
+
+const TOGGLE_ACTIVITY_QUERY = gql`
+	mutation ToggleActivity($id: Int!) {
+		ToggleActivity(id: $id) {
+			status
+		}
+	}
+`
+
 @observer
 class Main extends React.Component {
 
 	@observable _$checkedPerson = false
 	@observable.ref _$people = null
 	@observable.ref _$notifications = null
+  @observable.ref _$activities = null
 
 	componentWillMount() {
 		chrome.storage.local.get(['person'], action(({ person }) => {
@@ -66,6 +100,12 @@ class Main extends React.Component {
 				this._$notifications = response.data.catWorksNotification
 			}))
 
+    GraphQL.query(ACTIVITIES_QUERY)
+      .then(action((response) => {
+        console.log('activities list: ', response);
+        this._$activities = response.data.catWorksActivity;
+      }));
+
 		state.setContext('Dashboard')
 	}
 
@@ -81,8 +121,17 @@ class Main extends React.Component {
 					<Button className={s.button} onClick={this._onAddPerson}>Add person</Button>
 				</div>
 				<Search people={this._$people} onSelect={this._onPersonSelect} />
-				<Todo />
-				<Notifications notifications={this._$notifications} onShowPerson={this._onPersonSelect} />
+				<Todo
+          activities={this._$activities}
+          notifications={this._$notifications}
+          people={this._$people}
+          onToggle={this._onToggleActivity}
+          onReschedule={this._onReschedule}
+        />
+				<Notifications
+          notifications={this._$notifications}
+          onShowPerson={this._onPersonSelect}
+        />
 			</section>
 		)
 	}
@@ -100,6 +149,46 @@ class Main extends React.Component {
 		this.props.history.push('/add-person')
 	}
 
+  _onToggleActivity = (id) => {
+		return GraphQL.query(TOGGLE_ACTIVITY_QUERY, {
+			id: id
+		})
+			.then(action((response) => {
+        const updatedResult = this._$activities.map(activity => {
+          if (activity.activityId === id) {
+            return {
+              ...activity,
+              status: activity.status === 0 ? 1 : 0,
+            };
+          }
+          return activity;
+        });
+
+        this._$activities = updatedResult;
+			}))
+  }
+
+  _onReschedule = (id, value) => {
+      GraphQL.query(UPDATE_ACTIVITY_QUERY, {
+        id: parseInt(id),
+        parameter: {
+          date: value.toISOString()
+        }
+      })
+        .then(() => {
+          const updatedActivities = this._$activities.map(activity => {
+            if (activity.activityId === id) {
+              return {
+                ...activity,
+                date: value.toISOString()
+              };
+            }
+            return activity;
+          });
+
+          this._$activities = updatedActivities
+        })
+  }
 }
 
 export default Main
