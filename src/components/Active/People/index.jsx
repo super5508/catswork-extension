@@ -48,6 +48,7 @@ class People extends React.Component {
 		}))
 		.catch(err => {
 			console.error(err)
+
 		})
 	}
 
@@ -108,15 +109,32 @@ class People extends React.Component {
 		
 		return (
 			<section className={s.people}>
-				<div  style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-						<h2>Name</h2>
-						<h2>Firm</h2>
+				<div
+					style={{
+						display: 'flex', 
+						flexDirection: 'row', 
+						justifyContent: 'space-between',
+						textTransform: 'capitalize',
+						borderBottom: '3px solid rgb(255, 95, 68)'
+					}}>
+						<h2 style={{ margin: '2px'}}>Name</h2>
+						<h2 style={{ margin: '2px'}}>Firm</h2>
+						
 				</div>
+
 				{this.state.people.map(({ personId,	userId, first, last, company }) => {
 					// Using Inline styling because .scss wasn't working or I don't know how to use
 					return (
-						<div key={personId} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}} onClick={() => this._onPersonSelect(personId)}>
-							<p>{first}{last}</p>
+						<div 
+							key={personId} 
+							style={{
+								display: 'flex', 
+								flexDirection: 'row', 
+								justifyContent: 'space-between',
+								borderBottom: '1px solid #aaa'
+							}} 
+							onClick={() => this._onPersonSelect(personId)}>
+							<p>{first}{' '}{last}</p>
 							<p>{company}</p>
 						</div>
 					)

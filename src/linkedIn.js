@@ -153,7 +153,7 @@ function load() {
 	}
 
 	// let actionsContainer = document.querySelector('.pv-top-card-v3__distance-badge')
-	let actionsContainer = document.querySelector('#ember51')
+	let actionsContainer = document.querySelector('#ember53')
 
 	const injectButton = document.querySelector('#catswork_inject_button')
 
@@ -173,7 +173,7 @@ function load() {
 		const image = document.createElement('img')
 		image.src = chrome.runtime.getURL('images/icon128.png')
 
-		button.innerHTML = `add to`;
+		button.innerHTML = `Add to`;
 
 		button.appendChild(image)
 
