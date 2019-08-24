@@ -61,7 +61,7 @@ function onAdd() {
 
 	const generalLocationElement = document.querySelector('.pv-entity__location')
 	if (generalLocationElement) {
-		person.location = removeNewLines(generalLocationElement.textContent).trim()
+		person.location = removeNewLines(generalLocationElement.textContent).replace('Location', '').trim()
 	}
 
 	const experienceSection = document.querySelector('#experience-section')
