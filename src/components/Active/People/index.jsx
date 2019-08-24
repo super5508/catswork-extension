@@ -65,6 +65,7 @@ class People extends React.Component {
 			// just a workaround to fix 'cant read focus of undefined'
 			return (
 				<section className={s.people}>
+
 					<Input block
 						icon='fas fa-search'
 						block
@@ -73,7 +74,10 @@ class People extends React.Component {
 						inputRef={input => this._searchInput = input}
 						onFocus={this._onSearchFocus}
 						onBlur={this._onSearchBlur}
-						onChange={this._onSearchChange} />
+						onChange={this._onSearchChange} 
+					/>
+					
+
 					<Footer>
 						<Button block
 							center
@@ -95,7 +99,8 @@ class People extends React.Component {
 						inputRef={input => this._searchInput = input}
 						onFocus={this._onSearchFocus}
 						onBlur={this._onSearchBlur}
-						onChange={this._onSearchChange} />
+						onChange={this._onSearchChange} 
+					/>
 					<Footer>
 						<Button block
 							center
@@ -108,15 +113,31 @@ class People extends React.Component {
 		
 		return (
 			<section className={s.people}>
-				<div  style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
-						<h2>Name</h2>
-						<h2>Firm</h2>
-				</div>
+				<Input 
+					block
+					icon='fas fa-search'
+					block
+					type='text'
+					placeholder='Search by name or company'
+					inputRef={input => this._searchInput = input}
+					onFocus={this._onSearchFocus}
+					onBlur={this._onSearchBlur}
+					onChange={this._onSearchChange} 
+				/>
+
 				{this.state.people.map(({ personId,	userId, first, last, company }) => {
 					// Using Inline styling because .scss wasn't working or I don't know how to use
 					return (
-						<div key={personId} style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}} onClick={() => this._onPersonSelect(personId)}>
-							<p>{first}{last}</p>
+						<div 
+							key={personId} 
+							style={{
+								display: 'flex', 
+								flexDirection: 'row', 
+								justifyContent: 'space-between',
+								borderBottom: '1px solid #aaa'
+							}} 
+							onClick={() => this._onPersonSelect(personId)}>
+							<p>{first}{' '}{last}</p>
 							<p>{company}</p>
 						</div>
 					)

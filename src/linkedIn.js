@@ -188,7 +188,7 @@ function load() {
 		const image = document.createElement('img')
 		image.src = chrome.runtime.getURL('images/icon128.png')
 
-		button.innerHTML = `add to`;
+		button.innerHTML = `<span>Add to</span>`;
 
 		button.appendChild(image)
 
