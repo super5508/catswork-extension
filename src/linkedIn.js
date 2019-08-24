@@ -168,7 +168,7 @@ function load() {
 	}
 
 	// let actionsContainer = document.querySelector('.pv-top-card-v3__distance-badge')
-	let actionsContainer = document.querySelector('#ember51')
+	let actionsContainer = document.querySelector('.pv-s-profile-actions').parentElement.parentElement.parentElement
 
 	const injectButton = document.querySelector('#catswork_inject_button')
 
