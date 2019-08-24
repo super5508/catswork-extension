@@ -43,38 +43,52 @@ function onAdd() {
 
 	const nameElement = document.querySelector('.pv-top-card-v3--list')
 	if (nameElement) {
-		const name = removeNewLines(nameElement.textContent)
-			.trim()
-			.split(' ')
-			.filter(part => part.length > 0)
+		const nameLine = nameElement.querySelector('li')
+		if (nameLine){
+			const name = removeNewLines(nameLine.textContent)
+				.trim()
+				.split(' ')
+				.filter(part => part.length > 0)
 
-		if (name.length > 0) {
-			person.first = name[0]
-		}
-		if (name.length > 1) {
-			person.last = name[1]
+			if (name.length > 0) {
+				person.first = name[0]
+			}
+			if (name.length > 1) {
+				person.last = name[name.length - 1]
+			}
 		}
 	}
 
 	const generalLocationElement = document.querySelector('.pv-entity__location')
 	if (generalLocationElement) {
-		person.location = removeNewLines(generalLocationElement.textContent).trim()
+		person.location = removeNewLines(generalLocationElement.textContent).replace('Location', '').trim()
 	}
 
 	const experienceSection = document.querySelector('#experience-section')
+	console.log(experienceSection)
 	if (experienceSection) {
 		const topElement = experienceSection.querySelector('li')
 		if (topElement) {
+			console.log(topElement)
 			const positionElement = topElement.querySelector('h3')
 			if (positionElement) {
 				person.position = removeNewLines(positionElement.textContent).trim()
 			}
 
-			const h4Elements = Array.from(topElement.querySelectorAll('h4'))
 
+			// Company has 2 lines, 1st is hidden
+			const companyElement = topElement.querySelectorAll('p')
+			console.log(companyElement)
+			if (companyElement) {
+				person.company = removeNewLines(companyElement[1].textContent).trim()
+			}
+
+			const h4Elements = Array.from(topElement.querySelectorAll('h4'))
+			/*
 			if (h4Elements.length > 0) {
 				person.company = removeNewLines(h4Elements[0].textContent).replace('Company Name', '').trim()
 			}
+			*/
 			if (h4Elements.length > 1) {
 				const locationElement = h4Elements.filter(element => element.textContent.indexOf('Location') > -1)
 				if (locationElement.length) {
@@ -83,6 +97,7 @@ function onAdd() {
 			}
 		}
 	}
+	console.log(person)
 
 	const educationSection = document.querySelector('#education-section')
 	if (educationSection) {
