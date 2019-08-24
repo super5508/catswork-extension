@@ -2,18 +2,29 @@
 
 body {
 	color: @black;
-	min-height: 600px;
+	min-height: 580px;
 	margin: 0;
 	font-family: 'Karla', sans-serif;
 	font-size: 18px;
 	overflow: auto;
 }
 
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(0,0,0,.5);
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
 :global(#root) {
 	position: inherit;
 	display: flex;
 	flex-direction: column;
-	height: 600px;
+	// height: 600px;
 	overflow: inherit;
 }
 

@@ -48,7 +48,6 @@ class People extends React.Component {
 		}))
 		.catch(err => {
 			console.error(err)
-
 		})
 	}
 
@@ -66,6 +65,7 @@ class People extends React.Component {
 			// just a workaround to fix 'cant read focus of undefined'
 			return (
 				<section className={s.people}>
+
 					<Input block
 						icon='fas fa-search'
 						block
@@ -74,7 +74,10 @@ class People extends React.Component {
 						inputRef={input => this._searchInput = input}
 						onFocus={this._onSearchFocus}
 						onBlur={this._onSearchBlur}
-						onChange={this._onSearchChange} />
+						onChange={this._onSearchChange} 
+					/>
+					
+
 					<Footer>
 						<Button block
 							center
@@ -96,7 +99,8 @@ class People extends React.Component {
 						inputRef={input => this._searchInput = input}
 						onFocus={this._onSearchFocus}
 						onBlur={this._onSearchBlur}
-						onChange={this._onSearchChange} />
+						onChange={this._onSearchChange} 
+					/>
 					<Footer>
 						<Button block
 							center
@@ -109,18 +113,17 @@ class People extends React.Component {
 		
 		return (
 			<section className={s.people}>
-				<div
-					style={{
-						display: 'flex', 
-						flexDirection: 'row', 
-						justifyContent: 'space-between',
-						textTransform: 'capitalize',
-						borderBottom: '3px solid rgb(255, 95, 68)'
-					}}>
-						<h2 style={{ margin: '2px'}}>Name</h2>
-						<h2 style={{ margin: '2px'}}>Firm</h2>
-						
-				</div>
+				<Input 
+					block
+					icon='fas fa-search'
+					block
+					type='text'
+					placeholder='Search by name or company'
+					inputRef={input => this._searchInput = input}
+					onFocus={this._onSearchFocus}
+					onBlur={this._onSearchBlur}
+					onChange={this._onSearchChange} 
+				/>
 
 				{this.state.people.map(({ personId,	userId, first, last, company }) => {
 					// Using Inline styling because .scss wasn't working or I don't know how to use
