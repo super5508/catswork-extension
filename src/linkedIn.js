@@ -168,11 +168,19 @@ function load() {
 	}
 
 	// let actionsContainer = document.querySelector('.pv-top-card-v3__distance-badge')
-	let actionsContainer = document.querySelector('.pv-s-profile-actions').parentElement.parentElement.parentElement
+	let actionsContainer = document.querySelector('.pv-s-profile-actions')
 
 	const injectButton = document.querySelector('#catswork_inject_button')
 
 	if (actionsContainer) {
+
+		actionsContainer = actionsContainer.parentElement;
+
+		actionsContainer.style.display = 'flex'
+		actionsContainer.style.alignItems = 'center'
+		actionsContainer.style.justifyContent = 'center'
+
+
 		clearInterval(interval)
 
 		if (injectButton) {
