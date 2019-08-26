@@ -104,6 +104,7 @@ class Main extends React.Component {
       .then(action((response) => {
         console.log('activities list: ', response);
         this._$activities = response.data.catWorksActivity;
+        this._setActivitiesToStorage();
       }));
 
 		state.setContext('Dashboard')
@@ -165,6 +166,7 @@ class Main extends React.Component {
         });
 
         this._$activities = updatedResult;
+        this._setActivitiesToStorage();
 			}))
   }
 
@@ -187,7 +189,18 @@ class Main extends React.Component {
           });
 
           this._$activities = updatedActivities
+          this._setActivitiesToStorage();
         })
+  }
+
+  _setActivitiesToStorage() {
+    const alerts = this._$activities
+      .filter(activity => activity.status === 0)
+      .map(activity => ({
+        ...activity,
+        person: this._$people.find(person => person.personId === activity.personId)
+      }));
+    chrome.storage.local.set({ 'activities': alerts });
   }
 }
 
