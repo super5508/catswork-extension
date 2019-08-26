@@ -21,8 +21,11 @@ const PEOPLE_QUERY = gql`
 	}
 `
 
+String.prototype.trunc = String.prototype.trunc ||
+      function(n){
+          return (this.length > n) ? this.substr(0, n-1) + '...' : this;
+      };
 
- 
 class People extends React.Component {
 
 	state = { //TODO: Using State because not sure about the working of mobx here
@@ -137,8 +140,8 @@ class People extends React.Component {
 								borderBottom: '1px solid #aaa'
 							}} 
 							onClick={() => this._onPersonSelect(personId)}>
-							<p>{first}{' '}{last}</p>
-							<p>{company}</p>
+							<p>{`${first} ${last}`.trunc(15)}</p>
+							<p>{company.trunc(15)}</p>
 						</div>
 					)
 				})}
