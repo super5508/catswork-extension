@@ -14,7 +14,8 @@ class Context extends React.Component {
 		const backButton = this.props.history.index > 0
 			? (
 				<a className={s.back} onClick={this._onBack}>
-					<i className='fas fa-arrow-left' />
+					<i style={{marginRight: '5px'}} className='fas fa-arrow-left' /> Back
+					
 				</a>
 			) : null
 		const actionItem = state.$actionItem

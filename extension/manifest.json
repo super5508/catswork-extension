@@ -33,7 +33,8 @@
 		"activeTab",
 		"storage",
     "notifications",
-		"http://localhost:8080//"
+		"http://localhost:8080/",
+		"http://dashboard.catswork.io/"
 	],
 	"web_accessible_resources": [
 		"images/*.png"

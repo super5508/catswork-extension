@@ -51,6 +51,7 @@ class InfoForm extends React.Component {
 
 	render() {
 		return (
+			
 			<div className={s.infoForm}>
 				<Formik initialValues={this._initialValues}
 					validationSchema={VALIDATION_SCHEMA}

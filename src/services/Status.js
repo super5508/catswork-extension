@@ -1,7 +1,8 @@
 import axios from 'axios'
 import config from './../config'
-class Status {
 
+console.log(config.server.url)
+class Status {
 	static status() {
 		return axios.get(`${config.server.url}api/status`, {withCredentials: true})
 	}

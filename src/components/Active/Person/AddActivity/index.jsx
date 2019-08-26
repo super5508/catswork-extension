@@ -61,7 +61,7 @@ class AddActivity extends React.Component {
 					validationSchema={VALIDATION_SCHEMA}
 					onSubmit={this._onSubmit}
 					render={({ isSubmitting, values, setFieldValue, handleBlur }) => (
-						<Form>
+						<Form style={{height: '300px'}}>
 							<div className={s.inputs}>
 								{isSubmitting ? <div className={s.overlay} /> : null}
 								{isSubmitting ? <Loading /> : null}
