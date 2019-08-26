@@ -12,14 +12,20 @@ chrome.runtime.onMessage.addListener(function (message) {
 setInterval(function() {
   chrome.storage.local.get('activities', function(result) {
     if (result.activities) {
-      const newEvents = result.activities.filter(activity => {
+      const newEventsOneHourBefore = result.activities.filter(activity => {
         const activityTime = convertDateToMinutes(activity.date);
         const currentTime = convertDateToMinutes(new Date());
         return (activityTime - currentTime) === 60; // check if diff one hour
       });
 
-      if (newEvents && newEvents.length > 0) {
-        newEvents.forEach(event => {
+      const newEventsOneDayBefore = result.activities.filter(activity => {
+        const activityTime = convertDateToMinutes(activity.date);
+        const currentTime = convertDateToMinutes(new Date());
+        return (activityTime - currentTime) === (60 * 24); // check if diff one day
+      });
+
+      if (newEventsOneHourBefore && newEventsOneHourBefore.length > 0) {
+        newEventsOneHourBefore.forEach(event => {
           const options = {
               body:`${EnumActivity[event.activity]} with ${event.person.first} ${event.person.last} in an hour!`,
               icon: "images/icon128.png",
@@ -28,9 +34,20 @@ setInterval(function() {
           notifyMe('Todo Notification', options);
         })
       }
+
+      if (newEventsOneDayBefore && newEventsOneDayBefore.length > 0) {
+        newEventsOneDayBefore.forEach(event => {
+          const options = {
+              body:`${EnumActivity[event.activity]} with ${event.person.first} ${event.person.last} in 24 hours!`,
+              icon: "images/icon128.png",
+              requireInteraction: true,
+          };
+          notifyMe('Todo Notification', options);
+        })
+      }
     }
   })
-}, 60000)
+}, 60000) // one minute
 
 function notifyMe(title, options) {
   if (!("Notification" in window)) {
