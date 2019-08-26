@@ -104,22 +104,14 @@ class Person extends React.Component {
 			id: id
 		})
 			.then(action((response) => {
-				console.log(`person:`, this._$person)
-				console.log(`Activity:`, this._$person)
-				const activity = this._$person.userActivity.map((activity) => {
-					console.log(response)
-					if (activity.activityId === id) {
-						return {
-							...activity,
-							status: response.data.ToggleActivity.status
-						}
-					}
-					else {
-						return { ...activity }
-					}
-				})
+				const activity = this._$person.userActivity.map((activity) => ({
+          ...activity,
+          status: activity.activityId === id
+            ? activity.status === 1 ? 0 : 1
+            : activity.status,
+        }));
 
-				this._$person = { ...this._$person, activity }
+				this._$person = { ...this._$person, userActivity: activity }
 			}))
 	}
 
