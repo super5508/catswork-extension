@@ -10,42 +10,36 @@ chrome.runtime.onMessage.addListener(function (message) {
 })
 
 setInterval(function() {
-  chrome.storage.local.get('activities', function(result) {
-    if (result.activities) {
-      const newEventsOneHourBefore = result.activities.filter(activity => {
-        const activityTime = convertDateToMinutes(activity.date);
-        const currentTime = convertDateToMinutes(new Date());
-        return (activityTime - currentTime) === 60; // check if diff one hour
-      });
+  chrome.storage.local.get('activities', function({ activities }) {
+    chrome.storage.local.get('alerts', function({ alerts }) {
+      if (activities && alerts) {
+        activities.forEach(({ activity, date, person, activityId }) => {
+          const activityTime = convertDateToMinutes(date);
+          const currentTime = convertDateToMinutes(new Date());
+          const notificationBody = `${EnumActivity[activity]} with ${person.first}`;
+          const diff = activityTime - currentTime;
+          const alert = alerts.find(item => item.activityId === activityId);
 
-      const newEventsOneDayBefore = result.activities.filter(activity => {
-        const activityTime = convertDateToMinutes(activity.date);
-        const currentTime = convertDateToMinutes(new Date());
-        return (activityTime - currentTime) === (60 * 24); // check if diff one day
-      });
-
-      if (newEventsOneHourBefore && newEventsOneHourBefore.length > 0) {
-        newEventsOneHourBefore.forEach(event => {
-          const options = {
-              body:`${EnumActivity[event.activity]} with ${event.person.first} ${event.person.last} in an hour!`,
-              icon: "images/icon128.png",
+          if (diff > 1 && diff <= 60 && !alert.isOneHourNotified) { // 1 hour
+            notifyMe('Todo Notification', {
+              body: `${notificationBody} in ${diff} minute${diff > 1 && 's'}.`,
               requireInteraction: true,
-          };
-          notifyMe('Todo Notification', options);
+            });
+            chrome.storage.local.set({
+              alerts: alerts.map(item => item.activityId === activityId ? { ...item, isOneHourNotified: true } : { ...item })
+            });
+          } else if (diff > 0 && diff <= 1440 && !alert.isOneDayNotified && !alert.isOneHourNotified) { // 24 hours
+            notifyMe('Todo Notification', {
+              body: `${notificationBody} in ${Math.floor(diff / 60)} hour${Math.floor(diff / 60) > 1 && 's'}.`,
+              requireInteraction: true,
+            });
+            chrome.storage.local.set({
+              alerts: alerts.map(item => item.activityId === activityId ? { ...item, isOneDayNotified: true } : { ...item })
+            });
+          }
         })
       }
-
-      if (newEventsOneDayBefore && newEventsOneDayBefore.length > 0) {
-        newEventsOneDayBefore.forEach(event => {
-          const options = {
-              body:`${EnumActivity[event.activity]} with ${event.person.first} ${event.person.last} in 24 hours!`,
-              icon: "images/icon128.png",
-              requireInteraction: true,
-          };
-          notifyMe('Todo Notification', options);
-        })
-      }
-    }
+    })
   })
 }, 60000) // one minute
 
@@ -53,7 +47,7 @@ function notifyMe(title, options) {
   if (!("Notification" in window)) {
     alert("This browser does not support desktop notification");
   } else if (Notification.permission === "granted") {
-    new Notification(title, options);
+    const newNotification = new Notification(title, options);
   } else if (Notification.permission !== 'denied') {
     Notification.requestPermission(function (permission) {
       if(!('permission' in Notification)) {
@@ -61,7 +55,7 @@ function notifyMe(title, options) {
       }
 
       if (permission === "granted") {
-        new Notification(title, options);
+        const newNotification = new Notification(title, options);
       }
     });
   } else {
