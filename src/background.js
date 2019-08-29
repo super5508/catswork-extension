@@ -22,7 +22,7 @@ setInterval(function() {
 
           if (diff > 1 && diff <= 60 && !alert.isOneHourNotified) { // 1 hour
             notifyMe('Todo Notification', {
-              body: `${notificationBody} in ${diff} minute${diff > 1 && 's'}.`,
+              body: `${notificationBody} in ${diff} minute${diff > 1 ? 's' : ''}.`,
               requireInteraction: true,
             });
             chrome.storage.local.set({
@@ -30,7 +30,7 @@ setInterval(function() {
             });
           } else if (diff > 0 && diff <= 1440 && !alert.isOneDayNotified && !alert.isOneHourNotified) { // 24 hours
             notifyMe('Todo Notification', {
-              body: `${notificationBody} in ${Math.floor(diff / 60)} hour${Math.floor(diff / 60) > 1 && 's'}.`,
+              body: `${notificationBody} in ${Math.floor(diff / 60)} hour${Math.floor(diff / 60) > 1 ? 's' : ''}.`,
               requireInteraction: true,
             });
             chrome.storage.local.set({
