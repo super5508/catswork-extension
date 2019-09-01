@@ -119,8 +119,8 @@ class Main extends React.Component {
 		return (
 			<section className={s.main}>
 				<div className={s.buttons}>
-					<Button className={s.button} onClick={this._onViewPeople}>View people</Button>
-					<Button className={s.button} onClick={this._onAddPerson}>Add person</Button>
+					<Button className={s.button} onClick={this._onViewPeople}>View Contact</Button>
+					<Button className={s.button} onClick={this._onAddPerson}>Add Contact</Button>
 				</div>
 				<Search people={this._$people} onSelect={this._onPersonSelect} />
 				<Todo

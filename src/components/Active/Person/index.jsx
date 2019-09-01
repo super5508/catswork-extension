@@ -69,7 +69,7 @@ class Person extends React.Component {
 	@observable.ref _$person = null
 
 	componentWillMount() {
-		state.setContext('View person', <Button size='small' onClick={this._onEdit}>Edit</Button>)
+		// state.setContext('View person', <Button size='small' onClick={this._onEdit}>Edit</Button>)
 
 		GraphQL.query(PERSON_QUERY, { id: parseInt(this.props.match.params.id) })
 			.then(action((response) => {
@@ -95,9 +95,9 @@ class Person extends React.Component {
 		)
 	}
 
-	_onEdit = () => {
-		this.props.history.push(`/person/${this.props.match.params.id}/edit`)
-	}
+	// _onEdit = () => {
+	// 	this.props.history.push(`/person/${this.props.match.params.id}/edit`)
+	// }
 
 	_onToggleActivity = (id) => {
 		return GraphQL.query(TOGGLE_ACTIVITY_QUERY, {

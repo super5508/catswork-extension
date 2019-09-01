@@ -28,7 +28,7 @@ class AddPerson extends React.Component {
 
 	componentWillMount() {
 		console.log(`Add Person`)
-		state.setContext('Add person')
+		state.setContext('Add Person')
 		this._$page = 0
 		chrome.storage.local.get(['person'], action(({ person }) => {
 			if (person) {
