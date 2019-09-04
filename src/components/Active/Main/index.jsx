@@ -200,7 +200,7 @@ class Main extends React.Component {
         .filter(activity => activity.status === 0)
         .map(activity => ({
           ...activity,
-          person: this._$people.find(person => person.personId === activity.personId)
+          person: this._$people.find(person => person.personId === activity.personId) || {}
         }));
       
       chrome.storage.local.set({ activities: activitiesWithPeople });

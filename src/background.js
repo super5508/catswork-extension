@@ -17,7 +17,7 @@ chrome.runtime.onInstalled.addListener(function() {
           activities.forEach(({ activity, date, person, activityId }) => {
             const activityTime = convertDateToMinutes(date);
             const currentTime = convertDateToMinutes(new Date());
-            const notificationBody = `${EnumActivity[activity]} with ${person.first}`;
+            const notificationBody = `${EnumActivity[activity]} with ${person ? person.first : ''}`;
             const diff = activityTime - currentTime;
             const alert = alerts.find(item => item.activityId === activityId);
 
