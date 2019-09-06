@@ -1,53 +1,91 @@
-import { EnumActivity } from "models/enums";
-import { convertDateToMinutes } from './dateUtil';
+import { EnumActivity } from 'models/enums';
+import config from './config';
 
-chrome.runtime.onMessage.addListener(function (message) {
-	if (message._type === 'addPerson') {
-		chrome.storage.local.set({ person: message.person })
-		chrome.browserAction.setBadgeText({ text: 'ADD' })
-		chrome.browserAction.setBadgeBackgroundColor({ color: '#fd6b54' })
-	}
-})
+import Status from 'services/Status';
 
-setInterval(function() {
-  chrome.storage.local.get('activities', function(result) {
-    if (result.activities) {
-      const newEvents = result.activities.filter(activity => {
-        const activityTime = convertDateToMinutes(activity.date);
-        const currentTime = convertDateToMinutes(new Date());
-        return (activityTime - currentTime) === 60; // check if diff one hour
-      });
-
-      if (newEvents && newEvents.length > 0) {
-        newEvents.forEach(event => {
-          const options = {
-              body:`${EnumActivity[event.activity]} with ${event.person.first} ${event.person.last} in an hour!`,
-              icon: "images/icon128.png",
-              requireInteraction: true,
-          };
-          notifyMe('Todo Notification', options);
-        })
-      }
-    }
-  })
-}, 60000)
-
-function notifyMe(title, options) {
-  if (!("Notification" in window)) {
-    alert("This browser does not support desktop notification");
-  } else if (Notification.permission === "granted") {
-    new Notification(title, options);
-  } else if (Notification.permission !== 'denied') {
-    Notification.requestPermission(function (permission) {
-      if(!('permission' in Notification)) {
-        Notification.permission = permission;
-      }
-
-      if (permission === "granted") {
-        new Notification(title, options);
-      }
-    });
-  } else {
-    alert(`Permission is ${Notification.permission}`);
+chrome.runtime.onMessage.addListener(function(message) {
+  if (message._type === 'addPerson') {
+    chrome.storage.local.set({ person: message.person });
+    chrome.browserAction.setBadgeText({ text: 'ADD' });
+    chrome.browserAction.setBadgeBackgroundColor({ color: '#fd6b54' });
   }
+});
+
+const publicVapidKey =
+  'BLhTbgJzv9CCwMg5wXW8SSKfWwgABAkV6btg0QijZnEX7N8WAm_hkQ-R-fHjxxtGVXVr-PKpdGWEzeAVkWdymVk';
+
+if ('serviceWorker' in navigator) {
+  setInterval(() => {
+    send();
+  }, 60000)
+}
+
+async function send() {
+  try {
+    const status = await Status.status();
+    const user = status.data.payload;
+
+    const register = await navigator.serviceWorker.register(
+      '../catswork-extension.js',
+      {
+        scope: '/',
+      },
+    );
+
+    let serviceWorker;
+    if (register.installing) {
+      serviceWorker = register.installing;
+    } else if (register.waiting) {
+      serviceWorker = register.waiting;
+    } else if (register.active) {
+      serviceWorker = register.active;
+    }
+
+    if (serviceWorker) {
+      if (serviceWorker.state === 'activated') {
+        subscribe(register, user);
+      }
+
+      serviceWorker.addEventListener('statechange', e => {
+        if (e.target.state === 'activated') {
+          subscribe(register, user);
+        }
+      });
+    }
+  } catch (err) {
+    alert(`send error: ${err}`);
+  }
+}
+
+async function subscribe(register, user) {
+  try {
+    const subscription = await register.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(publicVapidKey),
+    });
+
+    await fetch(`${config.server.url}subscribe`, {
+      method: 'POST',
+      body: JSON.stringify({ subscription, userId: user.userId }),
+      headers: {
+        'content-type': 'application/json',
+      },
+    });
+
+  } catch (err) {
+    alert(`subscribe error: ${err}`);
+  }
+}
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
 }

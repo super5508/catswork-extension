@@ -15,6 +15,12 @@
 			{
 				"loose": true
 			}
-		]
+		],
+    [
+      "@babel/plugin-transform-runtime",
+      {
+        "regenerator": true
+      }
+    ]
 	]
 }
