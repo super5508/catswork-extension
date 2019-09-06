@@ -24,7 +24,7 @@ const Todo = ({ activities, notifications, people, onToggle, onReschedule }) => 
       .sort((a, b) => new Date(b.date) - new Date(a.date))
       .forEach(({ activity, activityId, personId, status, date }) => {
         if (status === 0) {
-          const person = people.find(person => person.personId === personId);
+          const person = people.find(person => person.personId === personId) || {};
 
           todoElements.push(
             <div key={activityId} className={s.notification}>

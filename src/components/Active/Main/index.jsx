@@ -93,7 +93,6 @@ class Main extends React.Component {
 			.then(action((response) => {
 				console.log(`Response from people Query:`, response)
 				this._$people = response.data.catWorksDashboard
-        this._setActivitiesToStorage();
 			}))
 		GraphQL.query(NOTIFICATIONS_QUERY)
 			.then(action((response) => {
@@ -105,7 +104,6 @@ class Main extends React.Component {
       .then(action((response) => {
         console.log('activities list: ', response);
         this._$activities = response.data.catWorksActivity;
-        this._setActivitiesToStorage();
       }));
 
 		state.setContext('Dashboard')
@@ -167,7 +165,6 @@ class Main extends React.Component {
         });
 
         this._$activities = updatedResult;
-        this._setActivitiesToStorage();
 			}))
   }
 
@@ -190,27 +187,7 @@ class Main extends React.Component {
           });
 
           this._$activities = updatedActivities
-          this._setActivitiesToStorage();
         })
-  }
-
-  _setActivitiesToStorage() {
-    if (this._$people && this._$activities) {
-      const activitiesWithPeople = this._$activities
-        .filter(activity => activity.status === 0)
-        .map(activity => ({
-          ...activity,
-          person: this._$people.find(person => person.personId === activity.personId) || {}
-        }));
-      
-      chrome.storage.local.set({ activities: activitiesWithPeople });
-      chrome.storage.local.set({ alerts: activitiesWithPeople.map(({ activityId }) => ({
-          activityId,
-          isOneHourNotified: false,
-          isOneDayNotified: false,
-        }))
-      });
-    }
   }
 }
 
