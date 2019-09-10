@@ -56,7 +56,7 @@ const Todo = ({ activities, notifications, people, onToggle, onReschedule }) => 
   return (
     <div className={s.todo}>
       <div className={s.heading}>
-        <Heading size={4}>To-do</Heading>
+        <Heading size={4}>To-Do</Heading>
       </div>
       <div className={s.container}>{todoElements.map(item => item)}</div>
     </div>
